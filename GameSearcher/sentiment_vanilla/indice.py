@@ -21,7 +21,8 @@ class IndexBuilder(SchemaManager):
   def __rank_sentiment(self, testo):
     sia = SentimentIntensityAnalyzer()
     scores = sia.polarity_scores(testo)
-    joyrate= scores['pos']/(scores['pos']+scores['neg'] + 0.001)
+    fix=scores['pos']+scores['neg']
+    joyrate= scores['pos']/(fix + 0.001) if fix != 0 else 0
     return joyrate
 
   def __build_index(self , max_threads):
